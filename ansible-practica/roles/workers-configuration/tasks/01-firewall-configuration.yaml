@@ -1,0 +1,14 @@
+- name: Reglas firewall 
+  ansible.posix.firewalld:
+      permanent: yes
+      port: "{{ item.port }}/{{ item.protocolo}}"
+      state: enabled
+      zone: public
+  with_items:
+     - {port: "10250",protocolo: "tcp"}
+     - {port: "30000-32767",protocolo: "tcp"}
+
+- name: Reiniciamos el servicio de firewall
+  service:
+    name: "firewalld"  
+    state: restarted

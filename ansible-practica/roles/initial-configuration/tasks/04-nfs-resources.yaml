@@ -1,0 +1,4 @@
+- name: Instalar recursos de nfs
+  dnf:
+    name: ["nfs-utils","nfs4-acl-tools","wget"]
+    state: present

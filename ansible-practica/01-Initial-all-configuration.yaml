@@ -1,0 +1,6 @@
+- name: Actualizar todas las instancias y configuración inicial
+  hosts: all
+  become: true  
+  gather_facts: true
+  roles:
+    - initial-configuration

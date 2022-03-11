@@ -1,0 +1,14 @@
+- name: Instalación de la SDN 1
+  hosts: ['master','nodes']
+  become: true  
+  gather_facts: true
+  roles:
+    - { role: sdn-configuration, vars: { group: "mw" } }
+
+- name: Instalación de la SDN 2
+  hosts: ['master']
+  become: true  
+  gather_facts: true
+  roles:
+    - { role: sdn-configuration, vars: { group: "master" } }
+  

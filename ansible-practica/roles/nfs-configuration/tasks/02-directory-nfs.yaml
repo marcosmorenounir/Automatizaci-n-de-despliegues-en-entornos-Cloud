@@ -1,0 +1,20 @@
+- name: Create un directorio para exportar por nfs
+  ansible.builtin.file:
+    path: /svr/nfs
+    state: directory
+    mode: '0755'
+
+- name: Crear fichero con acceso al share de NFS
+  template:
+    src: exports.j2
+    dest: /etc/exports
+    owner: root
+    group: root
+    mode: 0644
+
+- name: Releemos el fichero /etc/exports
+  command: "{{ item }}"
+  with_items:
+    - "exportfs -r"
+    - "exportfs -s"
+   

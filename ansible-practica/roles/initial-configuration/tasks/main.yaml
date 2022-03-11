@@ -1,0 +1,6 @@
+---
+
+#- include_tasks: 01-update-system.yaml
+- include_tasks: 02-configure-time.yaml
+- include_tasks: 03-selinux.yaml
+- include_tasks: 04-nfs-resources.yaml

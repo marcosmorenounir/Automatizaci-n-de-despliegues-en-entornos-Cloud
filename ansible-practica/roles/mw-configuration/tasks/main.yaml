@@ -1,0 +1,6 @@
+---
+
+- include_tasks: 01-routes.yaml
+- include_tasks: 02-firewall-configuration.yaml
+- include_tasks: 03-install-cri-o.yaml
+- include_tasks: 04-install-k8s.yaml

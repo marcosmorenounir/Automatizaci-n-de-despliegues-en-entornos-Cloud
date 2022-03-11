@@ -1,0 +1,25 @@
+- name: Instalamos el CRI-O a utilizar
+  command: "{{ item }}"
+  with_items:
+    - "wget -O /etc/yum.repos.d/devel:kubic:libcontainers:stable.repo https://download.opensuse.org/repositories/devel:/kubic:/libcontainers:/stable/CentOS_8_Stream/devel:kubic:libcontainers:stable.repo"
+    - "wget -O /etc/yum.repos.d/devel:kubic:libcontainers:stable:cri-o:1.23:1.23.1.repo https://download.opensuse.org/repositories/devel:kubic:libcontainers:stable:cri-o:1.23:1.23.1/CentOS_8_Stream/devel:kubic:libcontainers:stable:cri-o:1.23:1.23.1.repo"
+
+
+- name: Configuramos los módulos del kernel necesarios
+  template:
+    src: crio.j2
+    dest: /etc/modules-load.d/crio.conf
+    owner: root
+    group: root
+    mode: 0644
+
+- name: Instalar CRIO-O
+  dnf:
+    name: "cri-o"
+    state: present
+
+- name: Iniciamos el servicio de CRIO-O
+  service:
+    name: "crio"
+    enabled : yes
+    state: started

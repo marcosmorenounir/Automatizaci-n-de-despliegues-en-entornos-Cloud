@@ -1,0 +1,29 @@
+- name: Reglas firewall 
+  ansible.posix.firewalld:
+      permanent: yes
+      port: "{{ item.port }}/{{ item.protocolo}}"
+      state: enabled
+  with_items:
+     - {port: "8285",protocolo: "udp"}
+     - {port: "8472",protocolo: "udp"}
+  when: group == "mw"
+
+- name: Reiniciamos el servicio de firewall 
+  service:
+    name: "firewalld"  
+    state: restarted  
+  when: group == "mw"
+
+- name:  Vemos los nodos 
+  command:  kubectl apply -f https://docs.projectcalico.org/manifests/canal.yaml
+  register: result
+  when: group == "master"
+
+- name:  Sacamos valor por pantalla  
+  debug: msg="Nodes {{ result.stdout }}"
+  delegate_to: 127.0.0.1
+  when: group == "master"
+
+- name:  Reiniciamos el servidor
+  command: reboot
+  when: group == "master"

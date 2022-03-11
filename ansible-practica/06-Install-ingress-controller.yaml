@@ -1,0 +1,8 @@
+- name: Instalación de Ingress Controller
+  hosts: ['master']
+  become: true  
+  gather_facts: true
+  roles:
+    - role: ingress-controller-configuration
+
+  

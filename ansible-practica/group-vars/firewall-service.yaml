@@ -1,0 +1,3 @@
+---
+
+services: [nfs,rpc-bind,mountd]

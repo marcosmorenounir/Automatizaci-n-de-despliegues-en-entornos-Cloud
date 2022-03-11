@@ -1,0 +1,8 @@
+- name: Creamos un usuario no administrador para la gestión
+  hosts: ['master']
+  become: true
+  vars_files:
+    - "group-vars/user.yaml"
+    - "group-vars/vault-file.yaml"
+  roles:
+    - create-user

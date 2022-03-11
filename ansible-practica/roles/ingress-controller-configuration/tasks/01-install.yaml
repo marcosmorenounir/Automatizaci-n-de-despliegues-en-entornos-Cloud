@@ -1,0 +1,24 @@
+- name: Reiniciamos el servicio de crio para que coja el direccionamiento
+  service:
+    name: "crio"  
+    state: restarted
+
+
+- name:  Instalamos Ingress Controller 
+  command:  kubectl apply -f https://raw.githubusercontent.com/haproxytech/kubernetes-ingress/master/deploy/haproxy-ingress.yaml
+
+- name:  Vemos el namespace creado
+  command:  kubectl get namespaces
+  register: namespace
+
+- name:  Vemos los pods
+  command:  kubectl get pods --namespace=haproxy-controller
+  register: pods
+
+- name:  Vemos los servicios
+  command:   kubectl get svc -A
+  register: svc
+
+- name:  Sacamos valor por pantalla  
+  debug: msg="NAMESPACES {{ namespace.stdout }} /n/n PODS {{ pods.stdout }}  /n/n SERVICIOS {{ svc.stdout }} "
+  delegate_to: 127.0.0.1

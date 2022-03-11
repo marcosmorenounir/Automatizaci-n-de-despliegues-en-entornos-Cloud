@@ -1,0 +1,17 @@
+- name: Iniciamos el servicio de firewall
+  service:
+    name: "firewalld"
+    enabled : yes
+    state: started
+
+- name: Abrimos los puertos correspondientes
+  ansible.posix.firewalld:
+    service: "{{ item }}"
+    permanent: yes
+    state: enabled
+  loop: "{{ services }}"
+
+- name: Reiniciamos el servicio de firewall
+  service:
+    name: "firewalld"  
+    state: restarted

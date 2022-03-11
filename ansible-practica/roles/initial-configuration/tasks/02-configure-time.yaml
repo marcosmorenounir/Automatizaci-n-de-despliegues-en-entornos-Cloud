@@ -1,0 +1,19 @@
+
+- name: Configurar timezone a Europe/Madrid
+  community.general.timezone:
+    name: Europe/Madrid
+
+- name: Instalar chrony
+  dnf:
+    name: "chrony"
+    state: present
+
+- name: Empezar y lanzar al inicio de chrony
+  service:
+    name: "chronyd"
+    enabled : yes
+    state: started
+  
+- name:  Timedatectl
+  command: timedatectl set-ntp true
+

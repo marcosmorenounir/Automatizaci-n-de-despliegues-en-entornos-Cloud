@@ -1,0 +1,17 @@
+hosts:
+  master:
+    name: 'kubemaster'
+    dns: 'kubemaster.acme.es'
+    ip: '192.168.1.110'  
+  worker01:
+    name: 'kubenode1'
+    dns:  'kubenode1.acme.es'
+    ip: '192.168.1.111'  
+  worker02:
+    name: 'kubenode2'
+    dns: 'kubenode2.acme.es'
+    ip: '192.168.1.112'
+  nfs:
+    name: 'nfs'
+    dns: 'nfs.acme.es'
+    ip: '192.168.1.115'

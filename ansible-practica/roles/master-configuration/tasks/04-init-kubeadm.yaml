@@ -1,0 +1,7 @@
+- name:  Iniciamos kubeadm
+  command: kubeadm init --pod-network-cidr 192.169.0.0/16 --ignore-preflight-errors=NumCPU
+  register: token
+
+- name:  Sacamos valor por pantalla
+  debug: msg="El token es {{ token.stdout }}"
+  delegate_to: 127.0.0.1

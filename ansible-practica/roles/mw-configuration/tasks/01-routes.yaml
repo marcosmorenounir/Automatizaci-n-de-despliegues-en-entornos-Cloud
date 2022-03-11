@@ -1,0 +1,7 @@
+- name: Crear fichero con acceso al share de NFS
+  template:
+    src: routes.j2
+    dest: /etc/hosts
+    owner: root
+    group: root
+    mode: 0644

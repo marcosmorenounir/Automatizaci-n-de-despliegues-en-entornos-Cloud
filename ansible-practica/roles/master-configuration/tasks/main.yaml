@@ -1,0 +1,7 @@
+---
+
+- include_tasks: 01-firewall-configuration.yaml
+- include_tasks: 02-kubeadm.yaml
+- include_tasks: 03-firewall-worker.yaml
+- include_tasks: 04-init-kubeadm.yaml
+- include_tasks: 05-start-using-cluster.yaml

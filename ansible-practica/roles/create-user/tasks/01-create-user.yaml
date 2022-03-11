@@ -1,0 +1,27 @@
+
+- name: Crear usuario
+  user:
+    name: "{{ username }}"
+    password: "{{ '%s' | format(password) | password_hash('sha512') }}"
+    home: "{{ home }}"
+    shell: "{{ shell }}"
+  
+ 
+- name: Creamos directorio
+  file:
+    path: "{{ home }}/.kube"
+    state: directory
+
+- name:  Copiamos el fichero de configuracion en el nuevo directorio
+  command: "cp -i /etc/kubernetes/admin.conf {{ home }}/.kube/config"
+
+- name:  Damos permisos sobre la configuracion
+  command:  "chown {{ username }}. {{ home }}/.kube/config"
+
+- name:  Copiamos el fichero de configuracion en el nuevo directorio
+  template:
+    src: kubeadmin.j2
+    dest: /etc/sudoers.d/kubeadmin
+    owner: root
+    group: root
+    mode: 0644

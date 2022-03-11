@@ -1,0 +1,24 @@
+- name: Añadimos variable de entorno
+  lineinfile: dest=/root/.bashrc line='KUBECONFIG=/etc/kubernetes/admin.conf' insertafter='EOF' regexp='KUBECONFIG=/etc/kubernetes/admin.conf' state=present
+ 
+- name: Actualizamos las variables del usuario
+  shell: source /root/.bashrc
+
+- name: Creamos directorio
+  file:
+    path: /root/.kube
+    state: directory
+
+- name:  Copiamos el fichero de configuracion en el nuevo directorio
+  command: cp -i /etc/kubernetes/admin.conf /root/.kube/config
+
+- name:  Damos permisos sobre la configuracion
+  command:  chown 0:0 /root/.kube/config
+
+- name:  Vemos los nodos
+  command:  kubectl get nodes
+  register: nodes
+
+- name:  Sacamos valor por pantalla
+  debug: msg="Nodes {{ nodes.stdout }}"
+  delegate_to: 127.0.0.1

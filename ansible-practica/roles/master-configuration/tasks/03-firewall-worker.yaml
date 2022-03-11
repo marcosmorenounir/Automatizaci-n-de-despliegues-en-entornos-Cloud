@@ -1,0 +1,13 @@
+- name: Reglas firewall para workers
+  ansible.posix.firewalld:
+      permanent: yes
+      rich_rule: "{{ item }}"
+      state: enabled
+  with_items:
+    - "rule family=ipv4 source address=192.168.1.112/32 accept"
+    - "rule family=ipv4 source address=192.168.1.111/32 accept"
+
+- name: Reiniciamos el servicio de firewall
+  service:
+    name: "firewalld"  
+    state: restarted

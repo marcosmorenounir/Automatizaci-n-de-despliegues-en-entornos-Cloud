@@ -1,0 +1,9 @@
+- name: Instalación del servidor NFS
+  hosts: ['nfs']
+  become: true  
+  gather_facts: true
+  vars_files:
+    - "group-vars/hosts.yaml"
+    - "group-vars/firewall-service.yaml"
+  roles:
+    - nfs-configuration
