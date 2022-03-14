@@ -1,6 +1,5 @@
 - name: Instalación del servidor Master
   hosts: ['master']
-  become: true  
   gather_facts: true
   vars_files:
     - "group-vars/firewall-rules-master.yaml"

@@ -14,7 +14,7 @@
     state: restarted  
   when: group == "mw"
 
-- name:  Vemos los nodos 
+- name:  Descargamos el fichero 
   command:  kubectl apply -f https://docs.projectcalico.org/manifests/canal.yaml
   register: result
   when: group == "master"
@@ -23,6 +23,13 @@
   debug: msg="Nodes {{ result.stdout }}"
   delegate_to: 127.0.0.1
   when: group == "master"
+
+- name: Reiniciamos el servicio de crio para que coja el direccionamiento
+  service:
+    name: "crio"  
+    state: restarted
+  when: group == "master"
+
 
 - name:  Reiniciamos el servidor
   command: reboot

@@ -1,5 +1,5 @@
 - name: Configuración de master y workers
-  hosts: ['master','nodes']
+  hosts: ['master','workers']
   become: true  
   gather_facts: true
   vars_files:

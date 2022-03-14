@@ -1,5 +1,6 @@
 - name: Reglas firewall
-  ansible.posix.firewalld:
+  become: true 
+  ansible.posix.firewalld:  
       permanent: yes
       port: "{{ item.value.port }}/{{ item.value.protocolo}}"
       state: enabled
@@ -7,6 +8,7 @@
     - "{{ rules }}"
 
 - name: Reiniciamos el servicio de firewall
+  become: true 
   service:
     name: "firewalld"  
     state: restarted

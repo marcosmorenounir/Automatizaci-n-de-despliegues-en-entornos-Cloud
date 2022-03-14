@@ -1,2 +1,3 @@
 - name:  Configuramos kubeadm
+  become: true  
   command: kubeadm config images pull

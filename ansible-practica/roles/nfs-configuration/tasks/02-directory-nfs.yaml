@@ -1,8 +1,8 @@
 - name: Create un directorio para exportar por nfs
   ansible.builtin.file:
-    path: /svr/nfs
+    path: /srv/nfs
     state: directory
-    mode: '0755'
+    mode: 0755
 
 - name: Crear fichero con acceso al share de NFS
   template:

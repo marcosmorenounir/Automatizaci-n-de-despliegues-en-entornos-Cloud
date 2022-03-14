@@ -1,2 +1,0 @@
-
-command: kubeadm join 192.168.1.110:6443 --token eebamd.p9d6sj3k5e573y5t --discovery-token-ca-cert-hash sha256:484f18f3fe9dfd674f62d01a7964042d7d876c01b980adaaf42dc43e739efcd7

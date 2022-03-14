@@ -1,0 +1,17 @@
+- name: Instalamos el app 1
+  hosts: ['master']
+  become: true  
+  gather_facts: true
+  vars_files:
+    - "group-vars/user.yaml"
+  roles:
+    - { role: deploy-app, vars: { group: "master" } }
+
+- name: Instalamos el app 1
+  hosts: ['nfs']
+  become: true  
+  gather_facts: true
+  vars_files:
+    - "group-vars/user.yaml"
+  roles:
+    - { role: deploy-app, vars: { group: "nfs" } }

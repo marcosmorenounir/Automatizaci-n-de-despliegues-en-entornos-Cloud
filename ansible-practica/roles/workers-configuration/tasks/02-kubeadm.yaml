@@ -1,2 +1,13 @@
 - name:  Configuramos kubeadm
-  command: "{{ command }}"
+  vars:
+    contents : "{{ lookup('file', 'group-vars/command-kubadmin.txt') }}"
+  command: "{{ contents }}"
+
+- name: Reiniciamos el servicio de crio para que coja el direccionamiento
+  service:
+    name: "crio"  
+    state: restarted
+
+- name:  Reiniciamos los workers
+  command: reboot
+

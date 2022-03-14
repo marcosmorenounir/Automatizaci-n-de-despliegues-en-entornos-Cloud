@@ -1,0 +1,1 @@
+kubeadm join 192.168.1.110:6443 --token xniyoo.jzwg2absnjh0yln2	--discovery-token-ca-cert-hash sha256:e2c937eb01c4130b3749d6ca324e8ed1355f8e5733b3c7b126cd78a744794ca1 

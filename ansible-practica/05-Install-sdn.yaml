@@ -1,5 +1,5 @@
 - name: Instalación de la SDN 1
-  hosts: ['master','nodes']
+  hosts: ['master','workers']
   become: true  
   gather_facts: true
   roles:

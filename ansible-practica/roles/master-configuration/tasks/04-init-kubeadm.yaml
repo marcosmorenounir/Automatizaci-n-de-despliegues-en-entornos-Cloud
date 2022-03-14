@@ -1,7 +1,13 @@
 - name:  Iniciamos kubeadm
+  become: true  
   command: kubeadm init --pod-network-cidr 192.169.0.0/16 --ignore-preflight-errors=NumCPU
   register: token
 
+- name:  Copiamos el contenido en un fichero
+  local_action: copy content={{ token.stdout_lines[-2][:-2] }}{{ token.stdout_lines[-1]}} dest=group-vars/command-kubadmin.txt
+
 - name:  Sacamos valor por pantalla
-  debug: msg="El token es {{ token.stdout }}"
+  vars:
+    contents : "{{ lookup('file', 'group-vars/command-kubadmin.txt') }}"
+  debug: msg="El token es {{ contents }}"
   delegate_to: 127.0.0.1

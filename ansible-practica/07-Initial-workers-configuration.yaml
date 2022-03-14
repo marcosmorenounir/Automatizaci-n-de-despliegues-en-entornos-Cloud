@@ -1,8 +1,6 @@
 - name: Configuramos los workers
-  hosts: ['nodes']
+  hosts: ['workers']
   become: true  
   gather_facts: true
-  vars_files:
-    - "group-vars/command-kubadmin.yaml"
   roles:
     - workers-configuration

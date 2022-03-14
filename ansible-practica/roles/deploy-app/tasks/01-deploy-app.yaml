@@ -1,0 +1,48 @@
+- name: Copiamos el yaml dentro del master para lanzarlo  
+  copy:
+    src: nginx
+    dest: "{{ home }}"
+    owner: "{{ username }}"
+    group: "{{ username }}"    
+    mode: 0644
+  when: group == "master"
+
+- name: Creamos namespace
+  become_user: "{{ username }}" 
+  command: kubectl create namespace webapp-nginx
+  when: group == "master"
+
+- name: Definimos un volumen persistente
+  become_user: "{{ username }}" 
+  command: "kubectl apply -f {{ home }}/nginx/nfs-pv.yaml"
+  when: group == "master"
+
+- name: Creamos el claim
+  become_user: "{{ username }}" 
+  command: "kubectl apply -f {{ home }}/nginx/nfs-pvc.yaml"
+  when: group == "master"
+
+- name: Desplegamos el app
+  become_user: "{{ username }}" 
+  command: "kubectl apply -f {{ home }}/nginx/nginx-deployment.yaml"
+  when: group == "master"
+
+- name: Comprobamos el puerto que debemos de abrir en las instancias para el acceso desde el exterior
+  become_user: "{{ username }}" 
+  command: "kubectl get svc --namespace=haproxy-controller"
+  register: ha
+  when: group == "master"
+
+- name:  Sacamos valor por pantalla 
+  debug: msg="{{ ha.stdout_lines}}"
+  delegate_to: 127.0.0.1
+  when: group == "master"
+
+- name:  Copiamos la web que mostrará nginx en el volumen
+  copy:
+    src: code/
+    dest: "/srv/nfs"
+    mode: 0644
+  when: group == "nfs"
+
+
